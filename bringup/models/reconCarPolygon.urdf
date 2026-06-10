@@ -140,11 +140,45 @@
     </collision>
   </link>
 
+  <link name="backWheel">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.002" ixy="0.0" ixz="0.0" iyy="0.002" iyz="0.0" izz="0.002"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+
+<surface>
+      <friction>
+        <ode>
+          <mu>0.0000000001</mu>
+          <mu2>0.0000000001</mu2>
+          <slip1>0.05</slip1>
+          <slip2>0.05</slip2>
+        </ode>
+      </friction>
+    </surface>
+
+    </collision>
+  </link>
+
 
   <joint name="chassis_to_rightWheel" type="continuous">
     <parent link="chassis"/>
     <child link="rightWheel"/>
-    <origin xyz="0 -0.22 -0.15" rpy="0 0 0"/>
+    <origin xyz="0.0 -0.22 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.05"/>
   </joint>
@@ -153,7 +187,7 @@
   <joint name="chassis_to_leftWheel" type="continuous">
     <parent link="chassis"/>
     <child link="leftWheel"/>
-    <origin xyz="0 0.22 -0.15" rpy="0 0 0"/>
+    <origin xyz="0.0 0.22 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.05"/>
   </joint>
@@ -163,6 +197,13 @@
   <parent link="chassis"/>
   <child link="frontWheel"/>
   <origin xyz="0.35 0 -0.15" rpy="0 0 0"/>
+</joint>
+
+
+<joint name="chassis_to_backWheel" type="fixed">
+  <parent link="chassis"/>
+  <child link="backWheel"/>
+  <origin xyz="-0.35 0 -0.15" rpy="0 0 0"/>
 </joint>
 
 

@@ -1,6 +1,6 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import IncludeLaunchDescription, AppendEnvironmentVariable, TimerAction
+from launch.actions import IncludeLaunchDescription, AppendEnvironmentVariable, TimerAction, ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import os
@@ -57,6 +57,15 @@ def generate_launch_description():
         package = 'controller_manager',
         executable = 'spawner',
         arguments = ['joint_state_broadcaster'])
+    
+    slam_launch_object = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('slam_toolbox'), 'launch', 'online_async_launch.py')),
+        launch_arguments={'use_sim_time': 'true', 'slam_params_file': os.path.join(pkg_share, 'params', 'mapper_params_online_async.yaml')}.items())
+
+    rviz_launcher = ExecuteProcess(
+        cmd=['rviz2', '-d', os.path.join(pkg_share, 'params', 'recon_car_rviz.rviz')],
+        output='screen')
 
     ld.add_action(set_env_vars_resources)
     ld.add_action(robot_state_pub_node)
@@ -65,4 +74,6 @@ def generate_launch_description():
     ld.add_action(spawn_entity_node)
     ld.add_action(contoller_spawn_node)
     ld.add_action(joint_broadcaster_spawn_node)
+    ld.add_action(slam_launch_object)
+    ld.add_action(rviz_launcher)
     return ld
