@@ -46,18 +46,23 @@ def generate_launch_description():
         executable='create',
         arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '0','-y', '0','-z', '0.35'], output='screen')
 
-   
-    joint_state_pub_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        output='screen',)
+    
+    contoller_spawn_node = Node(
+        package = 'controller_manager',
+        executable = 'spawner',
+        arguments = ['diff_drive_controller'])
+    
 
+    joint_broadcaster_spawn_node = Node(
+        package = 'controller_manager',
+        executable = 'spawner',
+        arguments = ['joint_state_broadcaster'])
 
     ld.add_action(set_env_vars_resources)
     ld.add_action(robot_state_pub_node)
     ld.add_action(gazebo_launch_object)
     ld.add_action(ros_bridge_node)
     ld.add_action(spawn_entity_node)
-    ld.add_action(joint_state_pub_node)
+    ld.add_action(contoller_spawn_node)
+    ld.add_action(joint_broadcaster_spawn_node)
     return ld
