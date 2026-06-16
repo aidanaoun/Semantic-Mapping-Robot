@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<robot name="recon_car_polygon">
+
+  <link name="chassis">
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.113" ixy="0.0" ixz="0.0" iyy="0.033" iyz="0.0" izz="0.133"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.8 0.4 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="purple">
+        <color rgba="0 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 0.4 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+
+  <link name="front_sensor">
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.025"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+
+  <link name="rightWheel">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.00250" iyy="0.00132" izz="0.00132" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <surface>
+      <friction>
+        <ode>
+          <mu>1.5</mu>
+          <mu2>1.5</mu2>
+        </ode>
+      </friction>
+    </surface>
+    </collision>
+  </link>
+
+  <link name="leftWheel">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.00250" ixy="0.0" ixz="0.0" iyy="0.00132" iyz="0.0" izz="0.00132"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.04"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    <surface>
+      <friction>
+        <ode>
+          <mu>1.5</mu>
+          <mu2>1.5</mu2>
+          <slip1>0.05</slip1>
+          <slip2>0.05</slip2>
+        </ode>
+      </friction>
+    </surface>
+    </collision>
+  </link>
+
+  <link name="frontWheel">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.002" ixy="0.0" ixz="0.0" iyy="0.002" iyz="0.0" izz="0.002"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+
+<surface>
+      <friction>
+        <ode>
+          <mu>0.0000000001</mu>
+          <mu2>0.0000000001</mu2>
+          <slip1>0.05</slip1>
+          <slip2>0.05</slip2>
+        </ode>
+      </friction>
+    </surface>
+
+    </collision>
+  </link>
+
+  <link name="backWheel">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.002" ixy="0.0" ixz="0.0" iyy="0.002" iyz="0.0" izz="0.002"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+
+<surface>
+      <friction>
+        <ode>
+          <mu>0.0000000001</mu>
+          <mu2>0.0000000001</mu2>
+          <slip1>0.05</slip1>
+          <slip2>0.05</slip2>
+        </ode>
+      </friction>
+    </surface>
+
+    </collision>
+  </link>
+
+
+  <joint name="chassis_to_rightWheel" type="continuous">
+    <parent link="chassis"/>
+    <child link="rightWheel"/>
+    <origin xyz="0.0 -0.22 -0.15" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.05"/>
+  </joint>
+
+
+  <joint name="chassis_to_leftWheel" type="continuous">
+    <parent link="chassis"/>
+    <child link="leftWheel"/>
+    <origin xyz="0.0 0.22 -0.15" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.05"/>
+  </joint>
+
+
+<joint name="chassis_to_frontWheel" type="fixed">
+  <parent link="chassis"/>
+  <child link="frontWheel"/>
+  <origin xyz="0.35 0 -0.15" rpy="0 0 0"/>
+</joint>
+
+
+<joint name="chassis_to_backWheel" type="fixed">
+  <parent link="chassis"/>
+  <child link="backWheel"/>
+  <origin xyz="-0.35 0 -0.15" rpy="0 0 0"/>
+</joint>
+
+
+ <joint name="front_sensor_to_chassis" type="fixed">
+  <parent link="chassis"/>
+  <child link="front_sensor"/>
+  <origin xyz="0.4125 0 0.125" rpy="0 0 0"/>
+</joint>
+
+
+<!-- Front lidar -->
+<gazebo reference="front_sensor">
+  <sensor type="gpu_lidar" name="front_lidar">
+    <pose>0 0 0 0 0 0</pose>
+    <update_rate>10</update_rate>
+    <visualize>true</visualize>
+    <lidar>
+      <scan>
+        <horizontal>
+          <samples>8000.0</samples>
+          <resolution>1.0</resolution>
+          <min_angle>0</min_angle>
+          <max_angle>360.0</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.15</min>
+        <max>12.0</max>
+        <resolution>0.002</resolution>
+      </range>
+    </lidar>
+    <topic>scan</topic>
+    <gz_frame_id>front_sensor</gz_frame_id>
+  </sensor>
+</gazebo>
+
+
+<ros2_control name="GazeboSimSystem" type="system">     <!-- The inclusion of this tag acts as the resource manager -->
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>    <!-- This plugin is the hardware interface for the simulation -->
+    </hardware>
+    <joint name="chassis_to_leftWheel">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="chassis_to_rightWheel">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+</ros2_control>
+
+<gazebo>    <!-- Tells Gazebo to use ROS2 control -->
+    <!-- This plugin is the ROS2 control manager for the simulation -->
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">   
+      <parameters>/home/aidan/recon_car_ws/install/bringup/share/bringup/params/diff_drive_controller.yaml</parameters>   
+        <!-- params to designate which controllers to load -->
+    </plugin>
+</gazebo>
+
+
+</robot>
