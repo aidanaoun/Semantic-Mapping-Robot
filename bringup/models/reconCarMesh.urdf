@@ -214,36 +214,11 @@
 </joint>
 
 
-<!-- Front lidar -->
-<gazebo reference="front_sensor">
-  <sensor type="gpu_lidar" name="front_lidar">
-    <pose>0 0 0 0 0 0</pose>
-    <update_rate>10</update_rate>
-    <visualize>true</visualize>
-    <lidar>
-      <scan>
-        <horizontal>
-          <samples>8000.0</samples>
-          <resolution>1.0</resolution>
-          <min_angle>0</min_angle>
-          <max_angle>360.0</max_angle>
-        </horizontal>
-      </scan>
-      <range>
-        <min>0.15</min>
-        <max>12.0</max>
-        <resolution>0.002</resolution>
-      </range>
-    </lidar>
-    <topic>scan</topic>
-    <gz_frame_id>front_sensor</gz_frame_id>
-  </sensor>
-</gazebo>
 
-
-<ros2_control name="GazeboSimSystem" type="system">     <!-- The inclusion of this tag acts as the resource manager -->
+<ros2_control name="reconCarSystem" type="system">     <!-- this tag is read by the resource manager -->
     <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>    <!-- This plugin is the hardware interface for the simulation -->
+      <plugin>mock_components/GenericSystem</plugin>    <!-- INSERT NEWLY CREATED PLUGIN HERE -->
+      <param name="calculate_dynamics">true</param>
     </hardware>
     <joint name="chassis_to_leftWheel">
       <command_interface name="velocity">
@@ -261,15 +236,7 @@
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-</ros2_control>
-
-<gazebo>    <!-- Tells Gazebo to use ROS2 control -->
-    <!-- This plugin is the ROS2 control manager for the simulation -->
-    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">   
-      <parameters>/home/aidan/recon_car_ws/install/bringup/share/bringup/params/diff_drive_controller.yaml</parameters>   
-        <!-- params to designate which controllers to load -->
-    </plugin>
-</gazebo>
+  </ros2_control> 
 
 
 </robot>

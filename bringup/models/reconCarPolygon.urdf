@@ -241,7 +241,7 @@
 </gazebo>
 
 
-<ros2_control name="GazeboSimSystem" type="system">     <!-- The inclusion of this tag acts as the resource manager -->
+<ros2_control name="GazeboSimSystem" type="system">     <!-- this tag is read by the resource manager -->
     <hardware>
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>    <!-- This plugin is the hardware interface for the simulation -->
     </hardware>
