@@ -25,9 +25,10 @@ endif()
 
 
 install(
-  DIRECTORY launch
-  DIRECTORY models
-  DIRECTORY params
+  DIRECTORY
+	launch
+  	models
+  	params
   DESTINATION share/${PROJECT_NAME}
 )
 

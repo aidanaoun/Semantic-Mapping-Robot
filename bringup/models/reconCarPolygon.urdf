@@ -266,7 +266,7 @@
 <gazebo>    <!-- Tells Gazebo to use ROS2 control -->
     <!-- This plugin is the ROS2 control manager for the simulation -->
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">   
-      <parameters>/home/aidan/recon_car_ws/install/bringup/share/bringup/params/diff_drive_controller.yaml</parameters>   
+      <parameters>/home/aidan24/recon_car_ws/install/bringup/share/bringup/params/control_params_sim.yaml</parameters>
         <!-- params to designate which controllers to load -->
     </plugin>
 </gazebo>

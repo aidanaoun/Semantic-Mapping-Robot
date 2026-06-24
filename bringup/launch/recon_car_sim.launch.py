@@ -3,6 +3,8 @@ from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription, AppendEnvironmentVariable, TimerAction, ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 import os
 
 def generate_launch_description():
@@ -47,21 +49,37 @@ def generate_launch_description():
         arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '0','-y', '0','-z', '0.35'], output='screen')
 
     
-    contoller_spawn_node = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['diff_drive_controller'])
+    joint_state_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'joint_state_broadcaster',
+            '--controller-manager', '/controller_manager',
+            '--controller-manager-timeout', '30',
+            '--switch-timeout', '30',],)
+
+
+    diff_drive_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'diff_drive_controller',
+            '--controller-manager', '/controller_manager',
+            '--controller-manager-timeout', '30',
+            '--switch-timeout', '30',],)
     
 
-    joint_broadcaster_spawn_node = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['joint_state_broadcaster'])
-    
+    delayed_diff_drive_spawner = RegisterEventHandler(
+        OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[diff_drive_spawner],))
+
+
     slam_launch_object = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('slam_toolbox'), 'launch', 'online_async_launch.py')),
         launch_arguments={'use_sim_time': 'true', 'slam_params_file': os.path.join(pkg_share, 'params', 'mapper_params_online_async.yaml')}.items())
+
 
     rviz_launcher = ExecuteProcess(
         cmd=['rviz2', '-d', os.path.join(pkg_share, 'params', 'recon_car_rviz.rviz')],
@@ -72,8 +90,8 @@ def generate_launch_description():
     ld.add_action(gazebo_launch_object)
     ld.add_action(ros_bridge_node)
     ld.add_action(spawn_entity_node)
-    ld.add_action(contoller_spawn_node)
-    ld.add_action(joint_broadcaster_spawn_node)
+    ld.add_action(joint_state_broadcaster_spawner)
+    ld.add_action(delayed_diff_drive_spawner)
     ld.add_action(slam_launch_object)
     ld.add_action(rviz_launcher)
     return ld

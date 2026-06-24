@@ -30,7 +30,7 @@ def generate_launch_description():
             package='controller_manager',
             executable='ros2_control_node',
             parameters=[{'robot_description': robot_description_content}, 
-                        PathJoinSubstitution([FindPackageShare('bringup'),'params','control_params.yaml'])], output='screen')
+                        PathJoinSubstitution([FindPackageShare('bringup'),'params','control_params_physical.yaml'])], output='screen')
 
     diff_controller_spawn_node = Node(
         package = 'controller_manager',
