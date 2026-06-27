@@ -217,8 +217,9 @@
 
 <ros2_control name="reconCarSystem" type="system">     <!-- this tag is read by the resource manager -->
     <hardware>
-      <plugin>mock_components/GenericSystem</plugin>    <!-- INSERT NEWLY CREATED PLUGIN HERE -->
-      <param name="calculate_dynamics">true</param>
+      <plugin>custom_hardware/CustomHardwareInterface</plugin>
+      <param name="serial_port">/dev/ttyACM0</param>
+      <param name="baud_rate">115200</param>   <!-- INSERT NEWLY CREATED PLUGIN HERE -->
     </hardware>
     <joint name="chassis_to_leftWheel">
       <command_interface name="velocity">

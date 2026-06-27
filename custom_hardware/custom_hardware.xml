@@ -1,0 +1,10 @@
+<library path="custom_hardware">
+  <class
+    name="custom_hardware/CustomHardwareInterface"
+    type="custom_hardware::CustomHardwareInterface"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Arduino serial hardware interface for differential drive.
+    </description>
+  </class>
+</library>
