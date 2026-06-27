@@ -27,8 +27,8 @@ The robot uses LiDAR data with `slam_toolbox` to create a 2D occupancy map, whil
 * [x] Gazebo simulation
 * [x] Differential drive control
 * [x] Simulated LiDAR integration
-* [ ] Physical robot deployment
-* [ ] Real LiDAR integration
+* [x] Physical robot deployment
+* [x] Real LiDAR integration
 * [ ] Camera perception pipeline
 * [ ] Semantic map labeling
 * [ ] Final autonomous navigation demo
