@@ -117,14 +117,14 @@ hardware_interface::return_type CustomHardwareInterface::write(const rclcpp::Tim
     return hardware_interface::return_type::OK;
   }
 
-  /*
-    diff_drive_controller writes wheel velocity commands into:
+  
+    /* diff_drive_controller writes wheel velocity commands into:
 
       left_cmd_
       right_cmd_
 
     These are in rad/s because the command interface is velocity.
-  */
+    */
 
   std::ostringstream command;
   command << "CMD " << left_cmd_ << " " << right_cmd_ << "\n";
@@ -135,6 +135,11 @@ hardware_interface::return_type CustomHardwareInterface::write(const rclcpp::Tim
 
   return hardware_interface::return_type::OK;
 }
+
+
+
+
+
 
 
 bool CustomHardwareInterface::open_serial_port(){

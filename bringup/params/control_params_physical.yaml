@@ -18,7 +18,11 @@ diff_drive_controller:
 
     publish_rate: 30.0
     use_stamped_vel: false
+
+    odom_frame_id: odom
     base_frame_id: chassis
+    enable_odom_tf: true
+    tf_frame_prefix_enable: false
 
 joint_state_broadcaster:
   ros__parameters:
