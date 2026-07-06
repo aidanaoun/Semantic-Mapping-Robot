@@ -81,9 +81,25 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true', 'slam_params_file': os.path.join(pkg_share, 'params', 'mapper_params_online_async.yaml')}.items())
 
 
+    nav2_launch_object = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'navigation_launch.py')),
+        launch_arguments={'use_sim_time': 'true', 'params_file': os.path.join(pkg_share, 'params', 'nav2_params.yaml')}.items())
+
+
+    slam_and_nav2_delayed_launch = RegisterEventHandler(
+        OnProcessExit(
+            target_action=diff_drive_spawner,
+            on_exit=[slam_launch_object, TimerAction(period=1.5, actions=[nav2_launch_object])],
+            )
+        )
+    
+
     rviz_launcher = ExecuteProcess(
         cmd=['rviz2', '-d', os.path.join(pkg_share, 'params', 'recon_car_rviz.rviz')],
         output='screen')
+
+
 
     ld.add_action(set_env_vars_resources)
     ld.add_action(robot_state_pub_node)
@@ -92,6 +108,6 @@ def generate_launch_description():
     ld.add_action(spawn_entity_node)
     ld.add_action(joint_state_broadcaster_spawner)
     ld.add_action(delayed_diff_drive_spawner)
-    ld.add_action(slam_launch_object)
     ld.add_action(rviz_launcher)
+    ld.add_action(slam_and_nav2_delayed_launch)
     return ld

@@ -19,7 +19,6 @@ diff_drive_controller:
 
     use_sim_time: true
     publish_rate: 50.0
-    use_stamped_vel: false
     base_frame_id: chassis
 
 joint_state_broadcaster:
