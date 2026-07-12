@@ -46,7 +46,7 @@ def generate_launch_description():
     spawn_entity_node = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '0','-y', '0','-z', '0.35'], output='screen')
+        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '4.0','-y', '4.0','-z', '0.35'], output='screen')
 
     
     joint_state_broadcaster_spawner = Node(

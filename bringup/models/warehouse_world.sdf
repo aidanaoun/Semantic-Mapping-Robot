@@ -1,0 +1,604 @@
+<sdf version='1.10'>
+  <world name='empty'>
+    <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'/>
+    <gravity>0 0 -9.8000000000000007</gravity>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.400000006 0.400000006 0.400000006 1</ambient>
+      <background>0.699999988 0.699999988 0.699999988 1</background>
+      <shadows>true</shadows>
+    </scene>
+    <magnetic_field>5.5644999999999998e-06 2.2875799999999999e-05 -4.2388400000000002e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='urban_large_room_split_lights'>
+      <static>true</static>
+      <model name='urban_large_room_split'>
+        <static>true</static>
+        <link name='base_link'>
+          <collision name='collision'>
+            <pose>0 0 0 0 0 0</pose>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <scale>1 1 1</scale>
+              </mesh>
+            </geometry>
+          </collision>
+          <visual name='BrickWall_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>BrickWall</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BrickWall_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BrickWall_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BrickWall_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/BrickWall_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='FloorConcrete_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>FloorConcrete</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/FloorConcrete_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/FloorConcrete_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/FloorConcrete_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/FloorConcrete_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='WallLower_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>WallLower</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallLower_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallLower_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallLower_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/WallLower_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Beam_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Beam</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Beam_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Beam_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Beam_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Beam_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Beam_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='BeamGray_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>BeamGray</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BeamGray_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BeamGray_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BeamGray_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/BeamGray_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/BeamGray_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Metal_Rusty_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Metal_Rusty</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Metal_Rusty_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Metal_Rusty_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Metal_Rusty_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Metal_Rusty_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Metal_Rusty_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Chair_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Chair</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Chair_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Chair_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Chair_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Chair_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Chair_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='ColumnH_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>ColumnH</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/ColumnH_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/ColumnH_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/ColumnH_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/ColumnH_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/ColumnH_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='LightDome_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>LightDome</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/LightDome_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/LightDome_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/LightDome_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/LightDome_Roughness.jpg</roughness_map>
+                  <emissive_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/LightDome_Emissive.jpg</emissive_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/LightDome_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='WallPanels_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>WallPanels</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallPanels_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallPanels_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallPanels_Metal.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/WallPanels_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/WallPanels_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='CorrugatedRoof_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>CorrugatedRoof</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/CorrugatedRoof_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/CorrugatedRoof_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/CorrugatedRoof_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/CorrugatedRoof_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/CorrugatedRoof_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='RubblePile_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>RubblePile</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/RubblePile_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/RubblePile_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/RubblePile_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/RubblePile_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Table_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Table</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Table_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Table_Normal.jpg</normal_map>
+                  <metalness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Table_Metalness.jpg</metalness_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Table_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Table_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Traschcan_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Traschcan</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Trashcan55_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <visual name='Trashcan55Bag_visual'>
+            <geometry>
+              <mesh>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/meshes/large_room_split.dae</uri>
+                <submesh>
+                  <name>Trashcan55Bag</name>
+                  <center>false</center>
+                </submesh>
+              </mesh>
+            </geometry>
+            <material>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <pbr>
+                <metal>
+                  <albedo_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55Bag_Albedo.jpg</albedo_map>
+                  <normal_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55Bag_Normal.jpg</normal_map>
+                  <roughness_map>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Urban Platform/tip/files/materials/textures/Trashcan55Bag_Roughness.jpg</roughness_map>
+                </metal>
+              </pbr>
+              <script>
+                <uri>file:///home/aidan/.gz/fuel/fuel.ignitionrobotics.org/openrobotics/models/urban large room split/11/materials/scripts/</uri>
+                <uri>materials/textures/</uri>
+                <name>UrbanTile/Trashcan55Bag_Diffuse</name>
+              </script>
+            </material>
+          </visual>
+        </link>
+        <plugin name='ignition::gazebo::systems::PerformerDetector' filename='libignition-gazebo-performer-detector-system.so'>
+          <topic>/subt_performer_detector</topic>
+          <pose>-7 -1 5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>25 8 10</size>
+            </box>
+          </geometry>
+          <header_data>
+            <key>type</key>
+            <value>decision</value>
+          </header_data>
+        </plugin>
+      </model>
+      <link name='lights'>
+        <light name='spot_light1' type='spot'>
+          <pose>7.2000000000000002 15.4 7.7999999999999998 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <intensity>1</intensity>
+          <direction>0 0 -1</direction>
+          <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+          <specular>0.100000001 0.100000001 0.100000001 1</specular>
+          <attenuation>
+            <range>20</range>
+            <linear>0.20000000000000001</linear>
+            <constant>1</constant>
+            <quadratic>0.01</quadratic>
+          </attenuation>
+          <spot>
+            <inner_angle>2</inner_angle>
+            <outer_angle>3.1000000000000001</outer_angle>
+            <falloff>1.2</falloff>
+          </spot>
+        </light>
+        <light name='spot_light2' type='spot'>
+          <pose>-7.2000000000000002 15.4 7.7999999999999998 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <intensity>1</intensity>
+          <direction>0 0 -1</direction>
+          <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+          <specular>0.100000001 0.100000001 0.100000001 1</specular>
+          <attenuation>
+            <range>20</range>
+            <linear>0.20000000000000001</linear>
+            <constant>1</constant>
+            <quadratic>0.01</quadratic>
+          </attenuation>
+          <spot>
+            <inner_angle>2</inner_angle>
+            <outer_angle>3.1000000000000001</outer_angle>
+            <falloff>1.2</falloff>
+          </spot>
+        </light>
+        <light name='spot_light3' type='spot'>
+          <pose>7.2000000000000002 2.3999999999999999 7.7999999999999998 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <intensity>1</intensity>
+          <direction>0 0 -1</direction>
+          <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+          <specular>0.100000001 0.100000001 0.100000001 1</specular>
+          <attenuation>
+            <range>20</range>
+            <linear>0.20000000000000001</linear>
+            <constant>1</constant>
+            <quadratic>0.01</quadratic>
+          </attenuation>
+          <spot>
+            <inner_angle>2</inner_angle>
+            <outer_angle>3.1000000000000001</outer_angle>
+            <falloff>1.2</falloff>
+          </spot>
+        </light>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-11.068499565124512 -0.47285899519920349 0.0078638000413775444 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <light name='sun' type='directional'>
+      <pose>0 0 15 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.10000000000000001 -0.90000000000000002</direction>
+      <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+      <specular>0.200000003 0.200000003 0.200000003 1</specular>
+      <attenuation>
+        <range>10</range>
+        <linear>1</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
+</sdf>
