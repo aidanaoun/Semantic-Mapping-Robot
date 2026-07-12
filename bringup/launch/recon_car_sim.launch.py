@@ -15,7 +15,7 @@ def generate_launch_description():
     with open(car_polygon_path, 'r') as infp:
         robot_description_content = infp.read()
 
-    world_path = os.path.join(pkg_share, 'models', 'lighted_room_world.sdf')
+    world_path = os.path.join(pkg_share, 'models', 'warehouse_world.sdf')
     set_env_vars_resources = AppendEnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', os.path.join(pkg_share, 'models'))
 
 
@@ -94,6 +94,18 @@ def generate_launch_description():
             )
         )
     
+    goal_pose_node = Node(
+        package = 'goal_pose_creation',
+        executable = 'goal_pose_node',
+        arguments = [])
+    
+
+    delayed_goal_pose_spawner = TimerAction(
+        period=16.0,
+        actions=[goal_pose_node]
+    )
+
+    
 
     rviz_launcher = ExecuteProcess(
         cmd=['rviz2', '-d', os.path.join(pkg_share, 'params', 'recon_car_rviz.rviz')],
@@ -110,4 +122,5 @@ def generate_launch_description():
     ld.add_action(delayed_diff_drive_spawner)
     ld.add_action(rviz_launcher)
     ld.add_action(slam_and_nav2_delayed_launch)
+    ld.add_action(delayed_goal_pose_spawner)
     return ld
