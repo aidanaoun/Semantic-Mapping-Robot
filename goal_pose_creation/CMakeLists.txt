@@ -10,6 +10,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 
 # uncomment the following section in order to fill in
@@ -19,6 +22,9 @@ find_package(nav_msgs REQUIRED)
 add_executable(goal_pose_node src/goal_pose_creator.cpp)
 
 ament_target_dependencies(goal_pose_node
+        tf2
+        tf2_ros
+        tf2_geometry_msgs
         rclcpp
         geometry_msgs
         nav_msgs)
