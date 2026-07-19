@@ -15,7 +15,7 @@ def generate_launch_description():
     with open(car_polygon_path, 'r') as infp:
         robot_description_content = infp.read()
 
-    world_path = os.path.join(pkg_share, 'models', 'warehouse_world.sdf')
+    world_path = os.path.join(pkg_share, 'models', 'lighted_room_world.sdf')
     set_env_vars_resources = AppendEnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', os.path.join(pkg_share, 'models'))
 
 

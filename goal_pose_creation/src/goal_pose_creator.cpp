@@ -2,7 +2,8 @@
 #include <vector>
 #include <array>
 #include <chrono>
-
+#include <set>
+#include <cmath>
 #include <rclcpp/rclcpp.hpp>
 #include "nav_msgs/msg/occupancy_grid.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
@@ -37,9 +38,11 @@ class GoalPoseCreator : public rclcpp::Node{
         std::shared_ptr<tf2_ros::Buffer> tf_buffer_;                        // This buffer holds and processes transforms
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;          // This listener is what puts transforms into buffer
         std::vector<std::vector<int8_t>> matrix;
+        std::set<std::array<int, 2>> visited_cells;
+        std::vector<std::array<double, 2>> previous_goals;
+        std::array<std::array<double, 2>, 6> recent_poses;
         bool has_map_ = false;
         bool robot_is_moving = false;
-        int loops_completed = 0;
 
         // Map and grid variables (map units are meters and degrees)
         float map_resolution;   
@@ -106,6 +109,8 @@ class GoalPoseCreator : public rclcpp::Node{
 
             goal_msg.pose.orientation.w = 1.0;
 
+            robot_is_moving = true;
+            previous_goals.push_back({goal_pose_x, goal_pose_y});
             goal_pose_publisher_->publish(goal_msg);
         }
 
@@ -118,12 +123,21 @@ class GoalPoseCreator : public rclcpp::Node{
             }
 
             row_major_to_matrix(map_.data, matrix);
-            if(!update_robot_pose()){return;}
+            if(!update_robot_pose()){
+                return;
+            }
             
-            search_for_goal();
-            publish_goal_pose();
+            if(robot_is_moving){
+                double dx = goal_pose_x - robot_map_x;
+                double dy = goal_pose_y - robot_map_y;
+                double distance_to_goal = std::sqrt((dx * dx) + (dy * dy));
+                if(distance_to_goal > 0.3){return;}
+                robot_is_moving = false;
+            }
 
-            loops_completed++;
+            if(search_for_goal()){
+                publish_goal_pose();
+            }
         }
 
 
@@ -169,8 +183,9 @@ class GoalPoseCreator : public rclcpp::Node{
                 for(int x = x_min + jump_dist; x < (x_max - jump_dist); x++){
                     for(int y = y_min + jump_dist; y < (y_max - jump_dist); y++){
                         if((x > x_inner_min && x < x_inner_max) && (y > y_inner_min && y < y_inner_max)){continue;}
-                        int sum = sum_matrix_entries(jump_dist, x, y);   
-                        if (check_if_goal_found(jump_dist, sum, x, y)){return true;}
+                        auto sum_values = sum_matrix_entries(jump_dist, x, y);   
+                        int sum = sum_values[0];
+                        if (check_if_goal_valid(jump_dist, sum, x, y)){return true;}
                     }
                 }
 
@@ -193,23 +208,96 @@ class GoalPoseCreator : public rclcpp::Node{
         }
 
 
-        int sum_matrix_entries(int jump_dist, int x, int y){
+        std::array<int, 2> sum_matrix_entries(int jump_dist, int x, int y){
             int sum = 0;
+            int unoccupied_count = 0;
             for(int i = 0; i < jump_dist; i++){
                 for(int j = 0; j < jump_dist; j++){
+                    if ((y - j) >= map_size_y || (y - j) < 0){continue;}
+                    if ((x - i) >= map_size_x || (x - i) < 0){continue;}
+
                     sum += static_cast<int>(matrix[y - j][x - i]);
+                    if (matrix[y - j][x - i] >= 0 && matrix[y - j][x - i] <= 15){
+                        unoccupied_count++;
+                    }
                 }
             }
-            return sum;
+            return {sum, unoccupied_count};
         }
 
 
-        bool check_if_goal_found(int jump_dist, int sum, int x, int y){
-            if (sum < (jump_dist * jump_dist * 10)){
-                auto goal_poses = grid_cell_to_map_coords(x, y);
-                goal_pose_x = goal_poses[0];
-                goal_pose_y = goal_poses[1];
+        bool check_if_goal_valid(int jump_dist, int sum, int x, int y){
+            int max_occupancy = jump_dist * jump_dist * 10;
+            if (sum > max_occupancy){
+                return false;
+            }
+            
+            auto goal_coords = grid_cell_to_map_coords(x, y);
+            for(const auto& prev_goal : previous_goals){
+                double dx = prev_goal[0] - goal_coords[0];
+                double dy = prev_goal[1] - goal_coords[1];
+                bool goal_too_close = (dx * dx) + (dy * dy) < 0.8 * 0.8;
+                if (goal_too_close){
+                    return false;
+                }
+            }
+
+            int chunk_radius = static_cast<int>(0.9 / map_resolution);
+            visited_cells.clear();
+
+            if(check_is_accesible(chunk_radius, x, y, "None")){
+                if(too_close_to_robot(goal_coords[0], goal_coords[1])){return false;}
+                goal_pose_x = goal_coords[0];
+                goal_pose_y = goal_coords[1];
                 return true;
+            } else{
+                return false;
+            }
+        }
+
+        
+        bool check_is_accesible(int& chunk_radius, int cur_x, int cur_y, std::string prev_path){
+            std::array<int, 2> current_cell = {cur_x, cur_y};
+            if (visited_cells.find(current_cell) != visited_cells.end()){return false;}
+            visited_cells.insert(current_cell);
+
+            bool paths[4] = {true, true, true, true};  // up, down, left, right
+            if (prev_path == "up"){paths[0] = false;}
+            if (prev_path == "down"){paths[1] = false;}
+            if (prev_path == "left"){paths[2] = false;}
+            if (prev_path == "right"){paths[3] = false;}
+
+            if (cur_x + chunk_radius >= map_size_x){paths[0] = false;}
+            if (cur_x - chunk_radius < 0){paths[1] = false;}
+            if (cur_y + chunk_radius >= map_size_y){paths[2] = false;}
+            if (cur_y - chunk_radius < 0){paths[3] = false;}
+
+            auto [up_sum, up_free_count] = sum_matrix_entries(chunk_radius, cur_x + chunk_radius, cur_y);
+            auto [down_sum, down_free_count] = sum_matrix_entries(chunk_radius, cur_x - chunk_radius, cur_y);
+            auto [left_sum, left_free_count] = sum_matrix_entries(chunk_radius, cur_x, cur_y + chunk_radius);
+            auto [right_sum, right_free_count] = sum_matrix_entries(chunk_radius, cur_x, cur_y - chunk_radius);
+
+            int max_occupancy = 20;
+            int min_unoccupied_cells = static_cast<int>(chunk_radius * chunk_radius * 0.6);
+
+            if ((up_sum > max_occupancy) || (up_free_count <= min_unoccupied_cells)) {paths[0] = false;}
+            else if((up_sum < max_occupancy) && (up_free_count >= min_unoccupied_cells)){return true;}
+
+            if ((down_sum > max_occupancy) || (down_free_count <= min_unoccupied_cells)) {paths[1] = false;}
+            else if((down_sum < max_occupancy) && (down_free_count >= min_unoccupied_cells)){return true;}
+
+            if ((left_sum > max_occupancy) || (left_free_count <= min_unoccupied_cells)) {paths[2] = false;}
+            else if((left_sum < max_occupancy) && (left_free_count >= min_unoccupied_cells)){return true;}
+
+            if ((right_sum > max_occupancy) || (right_free_count <= min_unoccupied_cells)) {paths[3] = false;}
+            else if((right_sum < max_occupancy) && (right_free_count >= min_unoccupied_cells)){return true;}
+
+            for (int i = 0; i < 4; i++){
+                if(!paths[i]){continue;}
+                if(i == 0 && check_is_accesible(chunk_radius, cur_x + chunk_radius, cur_y, "down"))  {return true;}
+                if(i == 1 && check_is_accesible(chunk_radius, cur_x - chunk_radius, cur_y, "up"))    {return true;}
+                if(i == 2 && check_is_accesible(chunk_radius, cur_x, cur_y + chunk_radius, "right")) {return true;}
+                if(i == 3 && check_is_accesible(chunk_radius, cur_x, cur_y - chunk_radius, "left"))  {return true;}
             }
             return false;
         }
@@ -222,6 +310,13 @@ class GoalPoseCreator : public rclcpp::Node{
                 return true;
             }
             return false;
+        }
+
+        
+        bool too_close_to_robot(double goal_x, double goal_y){
+            double dx = goal_x - robot_map_x;
+            double dy = goal_y - robot_map_y;
+            return (dx * dx) + (dy * dy) < 0.8 * 0.8;
         }
 };
 

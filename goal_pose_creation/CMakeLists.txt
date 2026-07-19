@@ -13,7 +13,11 @@ find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(nav2_msgs REQUIRED)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -27,7 +31,9 @@ ament_target_dependencies(goal_pose_node
         tf2_geometry_msgs
         rclcpp
         geometry_msgs
-        nav_msgs)
+        nav_msgs
+        rclcpp_action
+        nav2_msgs)
 
 install(TARGETS
         goal_pose_node
