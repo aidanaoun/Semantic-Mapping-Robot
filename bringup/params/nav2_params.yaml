@@ -179,6 +179,7 @@ controller_server:
           "PathFollowCritic",
           "PathAngleCritic",
           "PreferForwardCritic",
+          "VelocityDeadbandCritic",
         ]
       ConstraintCritic:
         enabled: true
@@ -202,7 +203,9 @@ controller_server:
       CostCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 2.0
+        # Lower soft obstacle penalty so MPPI does not crawl through inflated-but-safe cells.
+        # Lethal collisions are still rejected by collision_cost and the padded costmap.
+        cost_weight: 1.0
         near_collision_cost: 253
         critical_cost: 300.0
         consider_footprint: false
@@ -236,6 +239,11 @@ controller_server:
       #   enabled: true
       #   twirling_cost_power: 1
       #   twirling_cost_weight: 10.0
+      VelocityDeadbandCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 35.0
+        deadband_velocities: [0.08, 0.0, 0.08]
 
 local_costmap:
   local_costmap:
@@ -249,6 +257,8 @@ local_costmap:
       height: 6
       resolution: 0.05
       robot_radius: 0.46
+      # Adds a hard 1.0 m safety buffer for low rubble that the lidar may not detect.
+      footprint_padding: 0.4
       plugins: ["voxel_layer", "inflation_layer"]
       filters: ["keepout_filter"]
       keepout_filter:
@@ -259,8 +269,9 @@ local_costmap:
         lethal_override_cost: 200
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 4.0
-        inflation_radius: 0.6
+        # Smoothly decay costs outside the 1.46 m padded collision radius.
+        cost_scaling_factor: 5.0
+        inflation_radius: 2.0
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: true
@@ -301,6 +312,8 @@ global_costmap:
       global_frame: map
       robot_base_frame: chassis
       robot_radius: 0.46
+      # Must match the local costmap so planning and control use the same clearance.
+      footprint_padding: 0.4
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -341,8 +354,8 @@ global_costmap:
         map_subscribe_transient_local: true
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.6
+        cost_scaling_factor: 5.0
+        inflation_radius: 2.0
       always_send_full_costmap: true
       introspection_mode: "disabled"
 
