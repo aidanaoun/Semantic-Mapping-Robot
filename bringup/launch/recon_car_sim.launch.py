@@ -25,13 +25,16 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='screen',
-        parameters=[{'robot_description': robot_description_content,'use_sim_time': True}])
+        parameters=[{'robot_description': robot_description_content,'use_sim_time': True}]
+    )
 
 
     gazebo_launch_object = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': f'-r -v 2 {world_path}','on_exit_shutdown': 'true'}.items())
+            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
+        ),
+        launch_arguments={'gz_args': f'-r -v 2 {world_path}','on_exit_shutdown': 'true'}.items()
+    )
 
 
     bridge_params = os.path.join(pkg_share, 'params', 'ros_gz_bridge.yaml')
@@ -40,13 +43,15 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=['--ros-args','-p',f'config_file:={bridge_params}',],
         parameters=[{'use_sim_time': True}],
-        output='screen')
+        output='screen'
+    )
 
 
     spawn_entity_node = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '4.0','-y', '4.0','-z', '0.35'], output='screen')
+        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '4.0','-y', '4.0','-z', '0.35'], output='screen'
+    )
 
     
     joint_state_broadcaster_spawner = Node(
@@ -91,13 +96,14 @@ def generate_launch_description():
         OnProcessExit(
             target_action=diff_drive_spawner,
             on_exit=[slam_launch_object, TimerAction(period=1.5, actions=[nav2_launch_object])],
-            )
         )
+    )
     
     goal_pose_node = Node(
         package = 'goal_pose_creation',
         executable = 'goal_pose_node',
-        arguments = [])
+        arguments = []
+    )
     
 
     delayed_goal_pose_spawner = TimerAction(
@@ -105,11 +111,16 @@ def generate_launch_description():
         actions=[goal_pose_node]
     )
 
-    
+    object_detection_node = Node(
+        package = 'object_detection', 
+        executable = 'object_detector',
+        arguments = []
+    )
 
     rviz_launcher = ExecuteProcess(
         cmd=['rviz2', '-d', os.path.join(pkg_share, 'params', 'recon_car_rviz.rviz')],
-        output='screen')
+        output='screen'
+    )
 
 
 
@@ -123,4 +134,5 @@ def generate_launch_description():
     ld.add_action(rviz_launcher)
     ld.add_action(slam_and_nav2_delayed_launch)
     ld.add_action(delayed_goal_pose_spawner)
+    ld.add_action(object_detection_node)
     return ld
