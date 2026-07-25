@@ -15,7 +15,7 @@ def generate_launch_description():
     with open(car_polygon_path, 'r') as infp:
         robot_description_content = infp.read()
 
-    world_path = os.path.join(pkg_share, 'models', 'warehouse_world.sdf')
+    world_path = os.path.join(pkg_share, 'models', 'office_world.sdf')
     set_env_vars_resources = AppendEnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', os.path.join(pkg_share, 'models'))
 
 
@@ -50,7 +50,7 @@ def generate_launch_description():
     spawn_entity_node = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '4.0','-y', '4.0','-z', '0.35'], output='screen'
+        arguments=['-name', 'recon_car_polygon','-file', car_polygon_path,'-x', '4.0','-y', '-1.5','-z', '0.35'], output='screen'
     )
 
     
