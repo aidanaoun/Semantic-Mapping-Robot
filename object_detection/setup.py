@@ -19,6 +19,7 @@ setup(
         'ros-rclpy',
         'sensor_msgs',
         'cv-bridge',
+        'ultralytics',
         ],
     zip_safe=True,
     maintainer='aidan',
