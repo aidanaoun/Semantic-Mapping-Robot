@@ -103,7 +103,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-7.758389949798584 4.756171703338623 0 0 0 -3.673210000056781e-06</pose>
+      <pose>-7.6264000000000003 4.5639900000000004 0 0 0 -0.96897900000000003</pose>
       <self_collide>false</self_collide>
     </model>
     <model name='urban_room_2way'>
@@ -175,7 +175,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-2.1184913377563297 -3.4100151695820555 0.011999732167687018 -2.7741535230725234e-07 8.8331223090116129e-07 5.881143522985884e-12</pose>
+      <pose>-2.11849 -3.4100199999999998 0.0119994 -6.0370799999999996e-09 4.06742e-09 1.3735400000000003e-11</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -212,7 +212,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-3.6183915234335187 -1.5894402367387173 0.011999889771767049 -1.4934884926013689e-20 2.7717899590134995e-18 -5.0260950343045452e-36</pose>
+      <pose>-3.6183900000000002 -2.5169199999999998 0.011999900000000001 -5.87932e-12 -2.1645299999999999e-12 -9.9847799999999998e-21</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -249,7 +249,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-4.5015767792752257 -3.6732390005593309 0.011999890298941067 -6.9584021854996107e-10 5.8138481239624818e-10 -0.0031181961029039195</pose>
+      <pose>-4.5015799999999997 -3.6732399999999998 0.011999900000000001 -6.9937299999999975e-10 5.7640200000000022e-10 -0.0031182000000000007</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -284,12 +284,12 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>3.4786251624581972 3.0221384424188482 0.011999890608234321 2.4206442019021268e-16 -4.6435972740482105e-10 2.3180087165835644e-24</pose>
+      <pose>3.4786299999999999 3.0221399999999998 0.011999900000000001 2.4177899999999999e-16 -4.6382700000000002e-10 2.31824e-24</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
     <model name='box'>
-      <pose>-19.500001198882906 1.9473061189008789 0.51199942319615432 -8.8927427027121413e-09 6.1933458137974163e-09 -3.1485162470507121e-05</pose>
+      <pose>-19.5 1.9473100000000001 0.51199899999999998 -8.8135499999999992e-09 6.1971900000000035e-09 -3.1485200000000015e-05</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -336,7 +336,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_0'>
-      <pose>-19.515783466950616 0.94730641658117654 0.51199945567358252 -1.6569927186325297e-08 9.7384171711426776e-09 -3.1350676632836244e-05</pose>
+      <pose>-19.515799999999999 0.94730599999999998 0.51199899999999998 -1.6467000000000001e-08 9.6895799999999995e-09 -3.1350600000000011e-05</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -383,7 +383,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_1'>
-      <pose>-19.520741820847519 -0.052693154997060905 0.51199961046441678 8.6120110840139934e-09 8.0177828861440923e-07 -3.1338781331011579e-05</pose>
+      <pose>-19.520700000000001 -0.052693200000000003 0.51200000000000001 8.5784000000000026e-09 7.9380199999999998e-07 -3.1338799999999999e-05</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -430,7 +430,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_2'>
-      <pose>-19.546360364261837 -1.0551619157194232 0.51199999081251935 -9.5712432397948069e-11 -1.2745240942281436e-08 -0.0052222866410457569</pose>
+      <pose>-19.546399999999998 -1.0551600000000001 0.51199899999999998 1.4497300000000003e-09 1.23662e-09 -0.0052223399999999998</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -477,7 +477,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_3'>
-      <pose>-18.549780907437761 -1.9430126262960674 0.51199942350145045 3.1557045729387883e-09 5.4526826116994546e-09 -0.0028130212107725636</pose>
+      <pose>-18.549800000000001 -1.9430099999999999 0.51199899999999998 2.9731600000000009e-09 4.7791099999999996e-09 -0.0028135600000000001</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -524,7 +524,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_4'>
-      <pose>19.499999999984848 1.9473336871863731 0.51199914413442771 3.4666860721941727e-20 -3.0905192571046485e-11 -4.4563408066606298e-18</pose>
+      <pose>19.499500000000001 2 0.51199899999999998 2.5288899999999994e-08 5.2412500000000027e-08 -4.2868100000000003e-08</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -571,7 +571,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_5'>
-      <pose>19.566062436414587 0.91729050958773728 0.51199999066988344 -2.3759315943840752e-08 -9.8808715174567511e-10 -0.0012026709948954886</pose>
+      <pose>19.565200000000001 1 0.51199899999999998 1.3307799999999997e-08 -1.2669399999999999e-06 -2.0233399999999994e-07</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -618,7 +618,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_6'>
-      <pose>19.642049034094946 -0.090299281552550681 0.51199999444072364 -2.403510042270749e-08 3.7210848679362345e-09 -0.016322977431090947</pose>
+      <pose>19.650038156967184 9.1502506408880599e-10 0.51199999115743422 -4.3649698335283261e-10 1.3537112490739224e-09 -2.8410550807932594e-06</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -665,7 +665,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_7'>
-      <pose>19.650633458155777 -1.0905686161192141 0.51199983086063305 -2.398170510765734e-08 -7.5747170952788906e-09 -0.016323037939796278</pose>
+      <pose>19.649570378782364 -0.99999982710542901 0.51199942368505547 3.6845934028607266e-09 -3.739279345425851e-09 -2.3549099845069932e-06</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -712,7 +712,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='box_8'>
-      <pose>18.801593169857185 -1.9999988889093834 0.51199944021347277 -1.7173092904711676e-08 5.0364525213268792e-09 4.6052208574320785e-08</pose>
+      <pose>18.801682646377451 -1.9999977392921238 0.5119994248755787 -7.5411686581831054e-09 4.7906652709833112e-11 -2.2910367704154696e-06</pose>
       <link name='box_link'>
         <inertial>
           <inertia>
@@ -806,7 +806,7 @@
         <pose>0 0 0 0 0 0</pose>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-3.735285642241545 6.3806284601091638 0.011999954447468734 -2.1713216536133169e-07 6.7531129515301019e-08 -2.6318950920176155e-06</pose>
+      <pose>-3.73529 6.38063 0.012 -2.1495999999999988e-07 6.6838799999999996e-08 -2.6319000000000002e-06</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -842,7 +842,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-3.2781579879856011 -4.0883279807594732 0 0 0 0</pose>
+      <pose>-3.2781600000000002 -4.08833 0 0 0 0</pose>
       <self_collide>false</self_collide>
     </model>
     <model name='first_2015_trash_can'>
@@ -876,7 +876,7 @@
         <pose>0 0 0 0 0 0</pose>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>4.5377876233811003 2.1728896080233593 0.013629758926618244 0.0074257885287876621 0.0010679678155701253 0.0011549093084305109</pose>
+      <pose>4.5377878685169479 2.1728796077819452 0.01362588843333973 0.0074082032247595542 0.0010654386253784399 0.0011576845618060114</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -922,7 +922,7 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>5.6810117249337395 2.8713695677049849 0 0 0 -3.673210000056781e-06</pose>
+      <pose>5.6810099999999997 2.8713700000000002 0 0 0 -3.6732099999999993e-06</pose>
       <self_collide>false</self_collide>
     </model>
     <model name='Lamp Post'>
@@ -959,13 +959,464 @@
         </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>9.2552995681762695 6.2703700065612793 -4.3606195449829102 0 0 0</pose>
+      <pose>9.2553000000000001 6.2703699999999998 -4.3606199999999999 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='KitchenSink'>
+      <link name='link'>
+        <pose>0 0 0 0 0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/kitchensink/2/meshes/kitchenSink.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/kitchensink/2/meshes/kitchenSink.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.5551459789276443 -7.0700197219848988 0.010390207712720334 2.0071063921952112e-09 -1.2248614594903307e-09 1.5495300403785119</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='person_walking'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.94999999999999996 0 0 0</pose>
+          <mass>80</mass>
+          <inertia>
+            <ixx>27.82</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>24.879999999999999</iyy>
+            <iyz>0</iyz>
+            <izz>4.5700000000000003</izz>
+          </inertia>
+        </inertial>
+        <collision name='bottom'>
+          <pose>0 0 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.34999999999999998 0.75 0.02</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='person'>
+          <pose>0 0 -0.02 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/walking person/3/meshes/walking.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 -0.02 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/walking person/3/meshes/walking.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>1.4894305467605513 -3.5187902450561368 0.011999908096685738 -2.8406816661012722e-08 -4.7062266453379633e-08 -2.1363822910670138e-07</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Sofa'>
+      <link name='link'>
+        <pose>0 0 0 0 0 1.5708</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/sofa/3/meshes/Sofa.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/sofa/3/meshes/Sofa.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-9.2602600000000006 -3.3239000000000001 0.012119899999999999 1.1919200000000004e-09 7.1260100000000001e-10 -0.016774300000000006</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='MiniSofa'>
+      <link name='body'>
+        <pose>0 0 0 0 0 -1.5708</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/minisofa/3/meshes/minisofa.obj</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/minisofa/3/meshes/minisofa.obj</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.1044699999999992 -2.8451900000000001 0.011100199999999999 -1.02538e-09 -1.18047e-09 4.4415000000000001e-15</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='fire_hydrant'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/fire hydrant/3/meshes/fire_hydrant.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/fire hydrant/3/meshes/fire_hydrant.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.8342299999999998 -4.3550000000000004 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='fire_hydrant_0'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/fire hydrant/3/meshes/fire_hydrant.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/fire hydrant/3/meshes/fire_hydrant.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-9.2686899999999994 -6.1621800000000002 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='jansport_backpack_red'>
+      <static>true</static>
+      <model name='artifact_proximity_detector'>
+        <static>true</static>
+        <pose>0 0 0 0 0 0</pose>
+        <plugin name='ignition::gazebo::systems::PerformerDetector' filename='libignition-gazebo-performer-detector-system.so'>
+          <topic>/subt_performer_detector</topic>
+          <header_data>
+            <key>type</key>
+            <value>artifact_proximity</value>
+          </header_data>
+          <geometry>
+            <box>
+              <size>10 10 10</size>
+            </box>
+          </geometry>
+        </plugin>
+      </model>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.49064 0.50071299999999996 0.10000000000000001 -1.4784900000000003 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Backpack'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.5673999786376953 -2.5825600624084468 0 0 0 1.9903813434542206</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='jansport_backpack_red_0'>
+      <static>true</static>
+      <model name='artifact_proximity_detector'>
+        <static>true</static>
+        <pose>0 0 0 0 0 0</pose>
+        <plugin name='ignition::gazebo::systems::PerformerDetector' filename='libignition-gazebo-performer-detector-system.so'>
+          <topic>/subt_performer_detector</topic>
+          <header_data>
+            <key>type</key>
+            <value>artifact_proximity</value>
+          </header_data>
+          <geometry>
+            <box>
+              <size>10 10 10</size>
+            </box>
+          </geometry>
+        </plugin>
+      </model>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/backpack/3/meshes/Backpack.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-8.7942260507170396 3.6187697599139139 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='TrashBin'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/trashbin/2/meshes/TrashBin.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/trashbin/2/meshes/TrashBin.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.4085621267003994 3.9457974038695696 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='TrashBin_0'>
+      <static>true</static>
+      <link name='body'>
+        <pose>0 0 0 0 0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/trashbin/2/meshes/TrashBin.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/trashbin/2/meshes/TrashBin.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.3198491073579905 -7.0115117409482082 0 0 0 0</pose>
       <self_collide>false</self_collide>
     </model>
     <include>
-      <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/kitchensink/2</uri>
-      <name>KitchenSink</name>
-      <pose>2.5607363430159968 -6.8070104766687418 0.010390153670378819 1.2988103180501068e-09 2.0102639669957389e-09 7.8319628436975495e-17</pose>
+      <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/dining chair/1</uri>
+      <name>DiningChair</name>
+      <pose>-2.5468785310049782 6.3135813326538255 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/foldable_chair/3</uri>
+      <name>foldable_chair</name>
+      <pose>2.6072684190600572 -6.1724644552994956 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/officechairgrey/2</uri>
+      <name>OfficeChairGrey</name>
+      <pose>-2.9292044639587402 -4.686617374420166 0 0 0 2.7086200029629093</pose>
+    </include>
+    <include>
+      <uri>file:///home/aidan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/drc practice: orange jersey barrier/3</uri>
+      <name>drc_practice_organge_jersey_barrier</name>
+      <pose>8.7733116149902344 -6.3337440490722656 0 0 0 2.179089961566147</pose>
     </include>
     <light name='sun' type='directional'>
       <pose>0 0 15 0 0 0</pose>
