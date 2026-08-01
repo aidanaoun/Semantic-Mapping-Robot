@@ -20,6 +20,8 @@ setup(
         'sensor_msgs',
         'cv-bridge',
         'ultralytics',
+        'tf2_ros_py'
+        'ros-geometry-msgs',
         ],
     zip_safe=True,
     maintainer='aidan',
