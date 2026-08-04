@@ -1,7 +1,7 @@
 # Semantic Mapping Robot
 
 > **Status:** Work in Progress
-> **Expected Completion:** Early July 2026
+> **Expected Completion:** Early August 2026
 
 ## Overview
 
@@ -29,8 +29,8 @@ The robot uses LiDAR data with `slam_toolbox` to create a 2D occupancy map, whil
 * [x] Simulated LiDAR integration
 * [x] Physical robot deployment
 * [x] Real LiDAR integration
-* [ ] Camera perception pipeline
-* [ ] Semantic map labeling
+* [x] Camera perception pipeline
+* [x] Semantic map labeling
 * [ ] Final autonomous navigation demo
 
 ## Goal
