@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import json
 import cv2 as cv
 import numpy as np
@@ -14,6 +12,7 @@ from sensor_msgs.msg import CameraInfo, Image, LaserScan
 from std_msgs.msg import String
 from tf2_ros import Buffer, TransformException, TransformListener
 from ultralytics import YOLO
+from visualization_msgs.msg import Marker, MarkerArray
 
 
 class ObjectDetectionNode(Node):
@@ -23,9 +22,17 @@ class ObjectDetectionNode(Node):
         self.declare_parameter("camera_optical_frame", "camera_optical")
         self.declare_parameter("map_frame", "map")
         self.declare_parameter("camera_horizontal_fov", 1.396)
-        self.declare_parameter("confidence_threshold", 0.5)
-        self.declare_parameter("cluster_distance_threshold", 0.75)
-        self.declare_parameter("minimum_sightings_to_publish", 1)
+        self.declare_parameter("confidence_threshold", 0.60)
+        self.declare_parameter("cluster_distance_threshold", 0.90)
+        self.declare_parameter("cross_class_cluster_distance_threshold", 0.40)
+        self.declare_parameter("minimum_sightings_to_publish", 5)
+        self.declare_parameter("minimum_average_confidence_to_publish", 0.60)
+        self.declare_parameter("candidate_timeout_sec", 2.0)
+        self.declare_parameter("candidate_confirmation_window_sec", 4.0)
+        self.declare_parameter("ignored_classes", ["traffic light", "stop sign", "parking meter", "lightpost", "light post", "traffic sign"])
+        self.declare_parameter("marker_minimum_separation", 0.60)
+        self.declare_parameter("marker_diameter", 0.26)
+        self.declare_parameter("label_text_height", 0.30)
 
         self.model_path = self.get_parameter("model_path").value
         self.camera_optical_frame = self.get_parameter("camera_optical_frame").value
@@ -33,7 +40,15 @@ class ObjectDetectionNode(Node):
         self.camera_horizontal_fov = float(self.get_parameter("camera_horizontal_fov").value)
         self.confidence_threshold = float(self.get_parameter("confidence_threshold").value)
         self.cluster_distance_threshold = float(self.get_parameter("cluster_distance_threshold").value)
+        self.cross_class_cluster_distance_threshold = float(self.get_parameter("cross_class_cluster_distance_threshold").value)
         self.minimum_sightings_to_publish = int(self.get_parameter("minimum_sightings_to_publish").value)
+        self.minimum_average_confidence_to_publish = float(self.get_parameter("minimum_average_confidence_to_publish").value)
+        self.candidate_timeout_ns = int(float(self.get_parameter("candidate_timeout_sec").value) * 1_000_000_000)
+        self.candidate_confirmation_window_ns = int(float(self.get_parameter("candidate_confirmation_window_sec").value) * 1_000_000_000)
+        self.ignored_classes = {str(name).strip().lower() for name in self.get_parameter("ignored_classes").value}
+        self.marker_minimum_separation = float(self.get_parameter("marker_minimum_separation").value)
+        self.marker_diameter = float(self.get_parameter("marker_diameter").value)
+        self.label_text_height = float(self.get_parameter("label_text_height").value)
 
         self.image_bridge = CvBridge()
         self.vision_model = YOLO(self.model_path)
@@ -55,6 +70,9 @@ class ObjectDetectionNode(Node):
 
         semantic_map_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.RELIABLE, durability=DurabilityPolicy.TRANSIENT_LOCAL)
         self.semantic_objects_pub = self.create_publisher(String, "/semantic_objects", semantic_map_qos)
+        self.semantic_markers_pub = self.create_publisher(MarkerArray, "/semantic_markers", semantic_map_qos)
+        self.clear_markers_on_next_publish = True
+        self.visible_marker_ids = set()
 
 
     def camera_info_callback(self, camera_info_msg):
@@ -78,7 +96,6 @@ class ObjectDetectionNode(Node):
 
         image_cv = self.image_bridge.imgmsg_to_cv2(image_msg, desired_encoding="bgr8")
         image_height, image_width = image_cv.shape[:2]
-
         detection_results = self.vision_model.predict(image_cv, conf=self.confidence_threshold, verbose=False)
         current_result = detection_results[0]
         box_coords, box_names, box_confidences = self.result_tensors_to_arrays(current_result)
@@ -210,6 +227,9 @@ class ObjectDetectionNode(Node):
         objects = []
 
         for box, name, confidence in zip(box_coords, box_names, box_confidences):
+            if str(name).strip().lower() in self.ignored_classes:
+                continue
+
             x1, y1, x2, y2 = box
 
             points_inside_box = (
@@ -259,22 +279,27 @@ class ObjectDetectionNode(Node):
 
         for detected_object in objects:
             map_point = detected_object["map_point"].astype(np.float64)
-            matching_clusters = [cluster for cluster in self.object_clusters if cluster["class_name"] == detected_object["name"] and cluster["id"] not in updated_cluster_ids]
+            matching_clusters = [cluster for cluster in self.object_clusters if cluster["id"] not in updated_cluster_ids]
 
             nearest_cluster = None
             nearest_distance = np.inf
 
             for cluster in matching_clusters:
                 distance = float(np.linalg.norm(map_point[:2] - cluster["position"][:2]))
-                if distance < nearest_distance:
+                matching_class = cluster["class_name"] == detected_object["name"]
+                allowed_distance = self.cluster_distance_threshold if matching_class else self.cross_class_cluster_distance_threshold
+
+                if distance <= allowed_distance and distance < nearest_distance:
                     nearest_cluster = cluster
                     nearest_distance = distance
 
-            if nearest_cluster is None or nearest_distance > self.cluster_distance_threshold:
+            if nearest_cluster is None:
                 observation_weight = max(detected_object["confidence"], 1e-6)
                 new_cluster = {
                     "id": self.next_cluster_id,
                     "class_name": detected_object["name"],
+                    "class_sighting_counts": {detected_object["name"]: 1},
+                    "class_confidence_totals": {detected_object["name"]: detected_object["confidence"]},
                     "position": map_point.copy(),
                     "position_m2": np.zeros(3, dtype=np.float64),
                     "total_weight": observation_weight,
@@ -300,15 +325,22 @@ class ObjectDetectionNode(Node):
             nearest_cluster["average_confidence"] = (nearest_cluster["average_confidence"] * old_count + detected_object["confidence"]) / new_count
             nearest_cluster["sighting_count"] = new_count
             nearest_cluster["last_seen_ns"] = observation_time.nanoseconds
+            detected_class = detected_object["name"]
+            nearest_cluster["class_sighting_counts"][detected_class] = nearest_cluster["class_sighting_counts"].get(detected_class, 0) + 1
+            nearest_cluster["class_confidence_totals"][detected_class] = nearest_cluster["class_confidence_totals"].get(detected_class, 0.0) + detected_object["confidence"]
+            nearest_cluster["class_name"] = max(nearest_cluster["class_sighting_counts"], key=lambda class_name: (nearest_cluster["class_sighting_counts"][class_name], nearest_cluster["class_confidence_totals"][class_name]))
             updated_cluster_ids.add(nearest_cluster["id"])
 
 
 
     def publish_semantic_objects(self, time_stamp):
+        self.remove_stale_candidate_clusters(time_stamp)
         published_objects = []
 
         for cluster in self.object_clusters:
             if cluster["sighting_count"] < self.minimum_sightings_to_publish:
+                continue
+            if cluster["average_confidence"] < self.minimum_average_confidence_to_publish:
                 continue
 
             if cluster["sighting_count"] > 1:
@@ -336,6 +368,111 @@ class ObjectDetectionNode(Node):
         message = String()
         message.data = json.dumps(semantic_map, separators=(",", ":"))
         self.semantic_objects_pub.publish(message)
+        self.publish_semantic_markers(published_objects, time_stamp)
+
+
+    def remove_stale_candidate_clusters(self, time_stamp):
+        current_time_ns = time_stamp.nanoseconds
+
+        self.object_clusters = [
+            cluster for cluster in self.object_clusters
+            if cluster["sighting_count"] >= self.minimum_sightings_to_publish
+            or (
+                current_time_ns - cluster["last_seen_ns"] <= self.candidate_timeout_ns
+                and current_time_ns - cluster["first_seen_ns"] <= self.candidate_confirmation_window_ns
+            )
+        ]
+
+
+    def select_non_overlapping_markers(self, published_objects):
+        """Keep the strongest RViz marker when confirmed objects visually overlap."""
+        if self.marker_minimum_separation <= 0.0:
+            return published_objects
+
+        prioritized_objects = sorted(published_objects, key=lambda semantic_object: (semantic_object["sighting_count"], semantic_object["average_confidence"]), reverse=True)
+        selected_objects = []
+
+        for semantic_object in prioritized_objects:
+            position = semantic_object["position"]
+            point = np.array([position["x"], position["y"]], dtype=np.float64)
+
+            if all(np.linalg.norm(point - np.array([selected_object["position"]["x"], selected_object["position"]["y"]], dtype=np.float64)) >= self.marker_minimum_separation for selected_object in selected_objects):
+                selected_objects.append(semantic_object)
+
+        return sorted(selected_objects, key=lambda semantic_object: semantic_object["id"])
+
+
+    def publish_semantic_markers(self, published_objects, time_stamp):
+        marker_array = MarkerArray()
+        stamp = time_stamp.to_msg()
+        marker_objects = self.select_non_overlapping_markers(published_objects)
+        current_marker_ids = {int(semantic_object["id"]) for semantic_object in marker_objects}
+
+        if self.clear_markers_on_next_publish:
+            clear_marker = Marker()
+            clear_marker.action = Marker.DELETEALL
+            marker_array.markers.append(clear_marker)
+            self.clear_markers_on_next_publish = False
+
+        for removed_id in self.visible_marker_ids - current_marker_ids:
+            for namespace in ("semantic_objects", "semantic_object_labels"):
+                delete_marker = Marker()
+                delete_marker.header.frame_id = self.map_frame
+                delete_marker.header.stamp = stamp
+                delete_marker.ns = namespace
+                delete_marker.id = removed_id
+                delete_marker.action = Marker.DELETE
+                marker_array.markers.append(delete_marker)
+
+        for semantic_object in marker_objects:
+            object_id = int(semantic_object["id"])
+            class_name = semantic_object["class_name"]
+            position = semantic_object["position"]
+            x, y, z = position["x"], position["y"], position["z"]
+
+            object_marker = Marker()
+            object_marker.header.frame_id = self.map_frame
+            object_marker.header.stamp = stamp
+            object_marker.ns = "semantic_objects"
+            object_marker.id = object_id
+            object_marker.type = Marker.CYLINDER
+            object_marker.action = Marker.ADD
+            object_marker.pose.position.x = x
+            object_marker.pose.position.y = y
+            object_marker.pose.position.z = z + 0.08
+            object_marker.pose.orientation.w = 1.0
+            object_marker.scale.x = self.marker_diameter
+            object_marker.scale.y = self.marker_diameter
+            object_marker.scale.z = 0.16
+            object_marker.color.r = 0.10
+            object_marker.color.g = 0.70
+            object_marker.color.b = 1.00
+            object_marker.color.a = 0.90
+            marker_array.markers.append(object_marker)
+
+            text_marker = Marker()
+            text_marker.header.frame_id = self.map_frame
+            text_marker.header.stamp = stamp
+            text_marker.ns = "semantic_object_labels"
+            text_marker.id = object_id
+            text_marker.type = Marker.TEXT_VIEW_FACING
+            text_marker.action = Marker.ADD
+            text_marker.pose.position.x = x
+            text_marker.pose.position.y = y
+            text_marker.pose.position.z = z + 0.26
+            text_marker.pose.orientation.w = 1.0
+            text_marker.scale.z = self.label_text_height
+            text_marker.color.r = 0.0
+            text_marker.color.g = 0.0
+            text_marker.color.b = 0.0
+            text_marker.color.a = 1.0
+            text_marker.text = class_name
+            marker_array.markers.append(text_marker)
+
+        self.semantic_markers_pub.publish(marker_array)
+        self.visible_marker_ids = current_marker_ids
+
+
 
     @staticmethod
     def nanoseconds_to_stamp_dict(nanoseconds):
