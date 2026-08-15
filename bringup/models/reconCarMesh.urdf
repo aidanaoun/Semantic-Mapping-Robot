@@ -44,6 +44,28 @@
   </link>
 
 
+  <link name="camera">
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.025 0.025 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <link name="camera_optical"></link>
+
+
   <link name="rightWheel">
     <inertial>
       <mass value="0.5"/>
@@ -211,6 +233,20 @@
   <parent link="chassis"/>
   <child link="front_sensor"/>
   <origin xyz="0.4125 0 0.125" rpy="0 0 0"/>
+</joint>
+
+
+<joint name="camera_to_chassis" type="fixed">
+  <parent link="chassis"/>
+  <child link="camera"/>
+  <origin xyz="0.42 0 0.04" rpy="0 0 0"/>
+</joint>
+
+
+<joint name="camera_optical_to_camera" type="fixed">
+     <parent link="camera"/>
+     <child link="camera_optical"/>
+     <origin xyz="0.0 0.0 0.0" rpy="-1.5707963268 0.0 -1.5707963268"/>
 </joint>
 
 
