@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 30  # Hz
+    update_rate: 20  # Hz
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
 
@@ -16,7 +16,7 @@ diff_drive_controller:
     wheel_separation: 0.2667
     wheel_radius: 0.0559
 
-    publish_rate: 30.0
+    publish_rate: 20.0
 
     open_loop: true
 
@@ -28,4 +28,4 @@ diff_drive_controller:
 joint_state_broadcaster:
   ros__parameters:
     type: joint_state_broadcaster/JointStateBroadcaster
-    publish_rate: 30.0
+    publish_rate: 20.0

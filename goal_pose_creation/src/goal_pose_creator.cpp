@@ -35,7 +35,7 @@ class GoalPoseCreator : public rclcpp::Node{
             navigation_client_ = rclcpp_action::create_client<NavigateToPose>(this, "navigate_to_pose");
             tf_buffer_ = std::make_shared<tf2_ros::Buffer>(get_clock());
             tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
-            timer_ = create_wall_timer(std::chrono::milliseconds(1000),[this]() {runLoop();});
+            timer_ = create_wall_timer(std::chrono::milliseconds(3000),[this]() {runLoop();});
         }
 
 

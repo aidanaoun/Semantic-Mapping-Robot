@@ -51,7 +51,7 @@ def generate_launch_description():
         name = 'rplidar_composition',
         output = 'screen',
         parameters=[{'frame_id': 'front_sensor', 'topic': 'scan', 
-                     'angle_compensation': True, 'serial_port': '/dev/ttyUSB0'}])
+                     'angle_compensate': True, 'serial_port': '/dev/ttyUSB0'}])
 
     slam_launch_object = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -94,6 +94,6 @@ def generate_launch_description():
     ld.add_action(rplidar_composition_node)
     ld.add_action(slam_and_nav2_delayed_launch)
     ld.add_action(delayed_goal_pose_spawner)
-    ld.add_action(camera_node)
-    # ld.add_action(object_detection_node)
+    #ld.add_action(camera_node)
+    #ld.add_action(object_detection_node)
     return ld
