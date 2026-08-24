@@ -30,7 +30,7 @@ amcl:
     save_pose_rate: 0.5
     sigma_hit: 0.2
     tf_broadcast: true
-    transform_tolerance: 1.0
+    transform_tolerance: 0.2
     introspection_mode: "disabled"
     update_min_a: 0.2
     update_min_d: 0.25
@@ -256,9 +256,9 @@ local_costmap:
       width: 6
       height: 6
       resolution: 0.05
-      robot_radius: 0.46
+      robot_radius: 0.33
       # Adds a hard 1.0 m safety buffer for low rubble that the lidar may not detect.
-      footprint_padding: 0.4
+      footprint_padding: 0.1
       plugins: ["voxel_layer", "inflation_layer"]
       filters: ["keepout_filter"]
       keepout_filter:
@@ -311,9 +311,9 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: map
       robot_base_frame: chassis
-      robot_radius: 0.46
+      robot_radius: 0.33
       # Must match the local costmap so planning and control use the same clearance.
-      footprint_padding: 0.4
+      footprint_padding: 0.1
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
