@@ -13,10 +13,12 @@ diff_drive_controller:
     left_wheel_names: ["chassis_to_leftWheel"]
     right_wheel_names: ["chassis_to_rightWheel"]
 
-    wheel_separation: 0.44
-    wheel_radius: 0.1
+    wheel_separation: 0.2667
+    wheel_radius: 0.0559
 
     publish_rate: 30.0
+
+    open_loop: true
 
     odom_frame_id: odom
     base_frame_id: chassis
