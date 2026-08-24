@@ -51,17 +51,17 @@ def generate_launch_description():
         name = 'rplidar_composition',
         output = 'screen',
         parameters=[{'frame_id': 'front_sensor', 'topic': 'scan', 
-                     'angle_compensation': True, 'serial_port': '/dev/ttyUSB0'}])
+                     'angle_compensate': True, 'serial_port': '/dev/ttyUSB0'}])
 
     slam_launch_object = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('slam_toolbox'), 'launch', 'online_async_launch.py')),
-        launch_arguments={'slam_params_file': os.path.join(pkg_share, 'params', 'mapper_params_online_async.yaml')}.items())
+        launch_arguments={'slam_params_file': os.path.join(pkg_share, 'params', 'mapper_params_online_async.yaml'), 'use_sim_time': 'false'}.items(),)
 
     nav2_launch_object = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'navigation_launch.py')),
-        launch_arguments={'use_sim_time': 'true', 'params_file': os.path.join(pkg_share, 'params', 'nav2_params.yaml')}.items())
+        launch_arguments={'use_sim_time': 'false', 'params_file': os.path.join(pkg_share, 'params', 'nav2_params.yaml')}.items())
 
     slam_and_nav2_delayed_launch = RegisterEventHandler(
         OnProcessExit(
@@ -74,7 +74,7 @@ def generate_launch_description():
         arguments = [])
     
     delayed_goal_pose_spawner = TimerAction(
-        period=20.0,
+        period=17.0,
         actions=[goal_pose_node])
 
     object_detection_node = Node(
@@ -87,13 +87,15 @@ def generate_launch_description():
         executable = 'camera_node',
         arguments = [])
 
-    ld.add_action(robot_state_pub_node)
-    ld.add_action(controller_manager)
-    ld.add_action(diff_controller_spawn_node)
-    ld.add_action(joint_broadcaster_spawn_node)
-    ld.add_action(rplidar_composition_node)
-    ld.add_action(slam_and_nav2_delayed_launch)
+    #ld.add_action(robot_state_pub_node)
+    #ld.add_action(controller_manager)
+    #ld.add_action(diff_controller_spawn_node)
+    #ld.add_action(joint_broadcaster_spawn_node)
+    #ld.add_action(rplidar_composition_node)
+    #ld.add_action(camera_node)
+
+    ld.add_action(slam_launch_object)
+    ld.add_action(nav2_launch_object)
     ld.add_action(delayed_goal_pose_spawner)
-    ld.add_action(camera_node)
-    # ld.add_action(object_detection_node)
+    ld.add_action(object_detection_node)
     return ld
