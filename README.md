@@ -1,40 +1,40 @@
 # Semantic Mapping Robot
 
-> **Status:** Work in Progress
-> **Expected Completion:** Early August 2026
-
 ## Overview
 
-This project is a ROS 2-based differential drive robot designed to build a semantic map of its environment using LiDAR, camera perception, SLAM, and autonomous navigation.
+A ROS 2-based differential-drive robot capable of autonomously mapping, navigating, and identifying objects in its environment.
 
-The robot uses LiDAR data with `slam_toolbox` to create a 2D occupancy map, while camera-based perception is used to detect and label objects in the environment. Nav2 is used for autonomous navigation, and `ros2_control` is used for differential drive control.
+The robot uses **RPLIDAR and SLAM Toolbox** to generate a 2D occupancy map, while a camera and **YOLO-based object detection** pipeline identify objects and place labeled semantic markers on the map using LiDAR distance measurements and TF2 transformations.
+
+Autonomous navigation is handled by **Nav2**, with motor control implemented through `ros2_control`, a custom hardware interface, and an Arduino controlling two NEMA 17 stepper motors.
+
+## Features
+
+* 2D LiDAR SLAM with SLAM Toolbox
+* Autonomous navigation using Nav2
+* YOLO camera-based object detection
+* LiDAR-assisted object localization
+* Semantic object markers displayed in RViz
+* Custom `ros2_control` hardware interface
+* Arduino-based stepper motor control
+* ROS 2 communication between a Raspberry Pi and remote computer
 
 ## Technologies
 
-* ROS 2
+* ROS 2 Jazzy
 * SLAM Toolbox
 * Nav2
 * ros2_control
-* Gazebo
-* LiDAR
-* Camera perception
+* TF2
+* RViz
+* YOLO / Ultralytics
+* OpenCV
 * Python / C++
 * Raspberry Pi
+* Arduino
 
-## Current Progress
+## Status
 
-* [x] ROS 2 workspace setup
-* [x] Gazebo simulation
-* [x] Differential drive control
-* [x] Simulated LiDAR integration
-* [x] Physical robot deployment
-* [x] Real LiDAR integration
-* [x] Camera perception pipeline
-* [x] Semantic map labeling
-* [ ] Final autonomous navigation demo
+**Completed — August 2026**
 
-## Goal
-
-The final goal is to deploy a physical mobile robot capable of autonomously mapping, navigating, and labeling objects in its environment using ROS 2.
-
-This project is currently under active development, with the first complete version expected in **early July 2026**.
+The final system integrates autonomous navigation, SLAM, computer vision, embedded motor control, and semantic mapping on a physical mobile robot.
